@@ -49,7 +49,7 @@ class CardHorizontal extends StatelessWidget {
                 image: NetworkImage(pelicula.getPosterImg()),
                 placeholder: AssetImage('assets/img/no-image.jpg'),
                 fit: BoxFit.cover,
-                height: 135.0,
+                height: 95.0,
               ),
             ),
           ),
