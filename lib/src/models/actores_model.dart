@@ -1,9 +1,8 @@
 class Cast {
-  List<Actor> actores = new List();
+  List<Actor> actores = [];
 
-  Cast.fromJsonList(List<dynamic> jsonList){
-
-    if(jsonList == null) return;
+  Cast.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null) return;
 
     jsonList.forEach((item) {
       final actor = Actor.fromJsonMap(item);
@@ -33,24 +32,21 @@ class Actor {
     this.profilePath,
   });
 
-  Actor.fromJsonMap(Map<String, dynamic> json){
-
-    castId      = json['cast_id'];
-    character   = json['character'];
-    creditId    = json['credit_id'];
-    gender      = json['gender'];
-    id          = json['id'];
-    name        = json['name'];
-    order       = json['order'];
+  Actor.fromJsonMap(Map<String, dynamic> json) {
+    castId = json['cast_id'];
+    character = json['character'];
+    creditId = json['credit_id'];
+    gender = json['gender'];
+    id = json['id'];
+    name = json['name'];
+    order = json['order'];
     profilePath = json['profile_path'];
-
   }
-  getFoto(){
-    if(profilePath==null){
+  getFoto() {
+    if (profilePath == null) {
       return 'https://www.descargasnsn.com/templates/Green/dleimages/noavatar.png';
-    }else{
+    } else {
       return 'https://image.tmdb.org/t/p/w500/$profilePath';
     }
   }
 }
-
