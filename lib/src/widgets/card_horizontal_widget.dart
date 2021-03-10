@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
-class CardHorizontal extends StatelessWidget {
 
+class CardHorizontal extends StatelessWidget {
   final List<Pelicula> peliculas;
   final Function siguientePagina;
 
-  CardHorizontal({@required this.peliculas,@required this.siguientePagina});
+  CardHorizontal({@required this.peliculas, @required this.siguientePagina});
 
-  final _pageController = new PageController(
-    initialPage: 1,
-    viewportFraction: 0.3
-  );
+  final _pageController =
+      new PageController(initialPage: 1, viewportFraction: 0.3);
 
   @override
   Widget build(BuildContext context) {
-
     final _screenSize = MediaQuery.of(context).size;
 
     _pageController.addListener(() {
-      if(_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
+      if (_pageController.position.pixels >=
+          _pageController.position.maxScrollExtent - 200) {
         siguientePagina();
       }
     });
@@ -29,13 +27,12 @@ class CardHorizontal extends StatelessWidget {
         pageSnapping: false,
         controller: _pageController,
         itemCount: peliculas.length,
-        itemBuilder: (context, i) => _tarjeta(context,peliculas[i]),
+        itemBuilder: (context, i) => _tarjeta(context, peliculas[i]),
       ),
     );
-
   }
 
-  Widget _tarjeta(BuildContext context, Pelicula pelicula){
+  Widget _tarjeta(BuildContext context, Pelicula pelicula) {
     pelicula.uniqueId = '${pelicula.id}-horizontal';
     final tarjeta = Container(
       margin: EdgeInsets.only(right: 15.0),
@@ -44,20 +41,22 @@ class CardHorizontal extends StatelessWidget {
           Hero(
             tag: pelicula.uniqueId,
             child: ClipRRect(
-              borderRadius:  BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(
                 image: NetworkImage(pelicula.getPosterImg()),
                 placeholder: AssetImage('assets/img/no-image.jpg'),
                 fit: BoxFit.cover,
-                height: 95.0,
+                height: 120.0,
               ),
             ),
           ),
-          SizedBox(height: 5.0,),
+          SizedBox(
+            height: 5.0,
+          ),
           Text(
             pelicula.title,
             overflow: TextOverflow.ellipsis,
-            style:Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.caption,
           )
         ],
       ),
@@ -65,11 +64,10 @@ class CardHorizontal extends StatelessWidget {
 
     return GestureDetector(
       child: tarjeta,
-      onTap: (){
+      onTap: () {
         Navigator.pushNamed(context, 'detalle', arguments: pelicula);
       },
     );
-
   }
 
   // List<Widget> _tarjetas(BuildContext context) {
