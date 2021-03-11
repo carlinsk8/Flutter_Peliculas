@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 
-class DataSearch extends SearchDelegate{
-
-  String seleccion  = '';
+class DataSearch extends SearchDelegate {
+  String seleccion = '';
   final peliculasProvider = new PeliculasProvider();
 
-  final peliculas   = [
+  final peliculas = [
     'IronMan',
     'Spiderman',
     'Arrow',
@@ -15,10 +14,7 @@ class DataSearch extends SearchDelegate{
     'La Mascara',
     'Guerra de titanes',
   ];
-  final peliculasRecientes = [
-    'Spiderman',
-    'IronMan'
-  ];
+  final peliculasRecientes = ['Spiderman', 'IronMan'];
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -26,7 +22,7 @@ class DataSearch extends SearchDelegate{
     return [
       IconButton(
         icon: Icon(Icons.clear),
-        onPressed: (){
+        onPressed: () {
           query = '';
         },
       )
@@ -41,8 +37,8 @@ class DataSearch extends SearchDelegate{
         icon: AnimatedIcons.menu_arrow,
         progress: transitionAnimation,
       ),
-      onPressed: (){
-        close(context,null);
+      onPressed: () {
+        close(context, null);
       },
     );
   }
@@ -63,16 +59,16 @@ class DataSearch extends SearchDelegate{
   @override
   Widget buildSuggestions(BuildContext context) {
     // Sugerencias que aparecen cuando escriben
-    if(query.isEmpty){
+    if (query.isEmpty) {
       return Container();
     }
     return FutureBuilder(
       future: peliculasProvider.buscarPeliculas(query),
       builder: (BuildContext context, AsyncSnapshot<List<Pelicula>> snapshot) {
-        if(snapshot.hasData){
-          final peliculas = snapshot.data;
+        if (snapshot.hasData) {
+          final peliculas = snapshot.data!;
           return ListView(
-            children: peliculas.map((pelicula){
+            children: peliculas.map((pelicula) {
               return ListTile(
                 leading: FadeInImage(
                   image: NetworkImage(pelicula.getPosterImg()),
@@ -80,22 +76,20 @@ class DataSearch extends SearchDelegate{
                   width: 50.0,
                   fit: BoxFit.contain,
                 ),
-                title: Text(pelicula.title),
-                subtitle: Text(pelicula.originalTitle),
-                onTap: (){
-                  close(context,null);
-                  pelicula.uniqueId='';
-                  Navigator.pushNamed(context, 'detalle',arguments: pelicula);
+                title: Text(pelicula.title!),
+                subtitle: Text(pelicula.originalTitle!),
+                onTap: () {
+                  close(context, null);
+                  Navigator.pushNamed(context, 'detalle', arguments: pelicula);
                 },
               );
             }).toList(),
           );
-        }else{
+        } else {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        
       },
     );
   }
@@ -103,8 +97,8 @@ class DataSearch extends SearchDelegate{
   // Widget buildSuggestions(BuildContext context) {
   //   // Sugerencias que aparecen cuando escriben
 
-  //   final listaSugerida = query.isEmpty  
-  //                   ? peliculasRecientes  
+  //   final listaSugerida = query.isEmpty
+  //                   ? peliculasRecientes
   //                   : peliculas.where(
   //                     (p)=>p.toLowerCase().startsWith(query.toLowerCase())
   //                   ).toList();
